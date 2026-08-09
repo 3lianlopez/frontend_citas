@@ -357,7 +357,10 @@
   </dialog>
 
   <script>
-    const DEFAULT_API_URL = 'http://localhost:8080/api/citas';
+    //local
+    //const DEFAULT_API_URL = 'http://localhost:8080/api/citas';
+    //prod
+    const DEFAULT_API_URL = 'https://backendcitas-production-2e49.up.railway.app/api/citas';
     let apiUrl = localStorage.getItem('tucitas.apiUrl') || DEFAULT_API_URL;
     let editingId = null;
     let deletingId = null;
