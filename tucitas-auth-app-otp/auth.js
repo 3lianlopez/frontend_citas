@@ -11,7 +11,7 @@ function apiError(body,status){const e=new Error(body?.message||body?.detail||bo
 async function apiFetch(path,options={}){const r=await fetch(`${API_ROOT}${path}`,{...options,headers:{'Content-Type':'application/json',Accept:'application/json',...authHeaders(),...(options.headers||{})}});let body=null;try{body=await r.json()}catch{}if(!r.ok)throw apiError(body,r.status);return body}
 function payloadOf(body){return body?.data??body}
 function redirectIfLogged(){if(authData()?.token)location.replace('index.html')}
-function requireAuth(){if(!authData()?.token){location.replace('login.html');return false}return true}
+function requireAuth(){if(!authData()?.token){location.replace('index.html');return false}return true}
 function showAuthError(message){const el=document.querySelector('#errorBox');if(el){el.textContent=message;el.classList.toggle('show',Boolean(message))}}
 function friendlyAuthError(e){return e instanceof TypeError?'No se pudo conectar con el servicio.':e.message||'No se pudo completar la operación.'}
 
@@ -53,7 +53,7 @@ function wireAuthForms(){
       const token=result?.token||result?.accessToken;
       if(!token)throw new Error('El servicio no devolvió un token de acceso.');
       saveAuth({token,email:data.email,nombres:result.nombres,apellidos:result.apellidos});
-      location.replace('index.html');
+      location.replace('citas.html');
     }catch(err){
       showAuthError(friendlyAuthError(err));
     }finally{
@@ -95,7 +95,7 @@ function wireOtpForm(){
         body:JSON.stringify({email,otp:otpInput.value})
       });
       sessionStorage.removeItem(PENDING_OTP_EMAIL_KEY);
-      location.replace('login.html?verified=1');
+      location.replace('index.html?verified=1');
     }catch(err){
       showAuthError(friendlyAuthError(err));
       otpInput.select();
