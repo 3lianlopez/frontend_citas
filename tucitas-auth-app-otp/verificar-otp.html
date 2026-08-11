@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TuCitas | Verificar correo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-auth="guest">
+  <main class="auth-shell">
+    <section class="auth-card otp-card">
+      <div class="brand">
+        <div class="brand-mark">📅</div>
+        <div><h1>TuCitas</h1><p>Gestión simple de citas</p></div>
+      </div>
+
+      <h2>Verifica tu correo</h2>
+      <p class="subtitle">Escribe el código de 6 dígitos que enviamos a tu correo electrónico.</p>
+      <div id="errorBox" class="error-box" role="alert" aria-live="polite"></div>
+
+      <form id="otpForm">
+        <div class="field">
+          <label for="email">Correo electrónico</label>
+          <input id="email" type="email" autocomplete="email" readonly aria-readonly="true">
+          <small class="field-help">Este es el correo utilizado durante el registro y no se puede modificar.</small>
+        </div>
+
+        <div class="field">
+          <label for="otp">Código OTP <span class="required">*</span></label>
+          <input id="otp" name="otp" class="otp-input" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" minlength="6" maxlength="6" placeholder="000000" required>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Verificar código</button>
+      </form>
+
+      <p class="auth-link">¿Ingresaste un correo incorrecto? <a href="registro.html">Volver al registro</a></p>
+    </section>
+  </main>
+  <script src="auth.js"></script>
+</body>
+</html>

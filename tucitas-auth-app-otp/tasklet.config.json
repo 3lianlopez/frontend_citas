@@ -1,0 +1,6 @@
+{
+  "name": "tucitas-auth-app",
+  "displayName": "TuCitas con autenticación",
+  "description": "Gestión segura de citas con registro e inicio de sesión mediante API REST.",
+  "instantAppType": "html"
+}
