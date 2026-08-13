@@ -1,7 +1,8 @@
 const API_ROOT_DEFAULT='https://backendcitas-production-2e49.up.railway.app';
 const API_ROOT=localStorage.getItem('tucitas.apiRoot')||API_ROOT_DEFAULT;
+console.log('API_ROOT:',API_ROOT + ' (default: ' + API_ROOT_DEFAULT + ')');
 const AUTH_KEY='tucitas.auth';
-const PENDING_OTP_EMAIL_KEY='tucitas.pendingOtpEmail';
+//const PENDING_OTP_EMAIL_KEY='tucitas.pendingOtpEmail';
 
 function authData(){try{return JSON.parse(sessionStorage.getItem(AUTH_KEY)||'null')}catch{return null}}
 function saveAuth(data){sessionStorage.setItem(AUTH_KEY,JSON.stringify(data))}
@@ -45,8 +46,8 @@ function wireAuthForms(){
       }));
 
       if(isRegister){
-        sessionStorage.setItem(PENDING_OTP_EMAIL_KEY,data.email);
-        location.replace('verificar-otp.html');
+        //sessionStorage.setItem(PENDING_OTP_EMAIL_KEY,data.email);
+        location.replace('index.html');
         return;
       }
 
@@ -62,53 +63,53 @@ function wireAuthForms(){
   });
 }
 
-function wireOtpForm(){
-  const form=document.querySelector('#otpForm');
-  if(!form)return;
+  // function wireOtpForm(){
+  //   const form=document.querySelector('#otpForm');
+  //   if(!form)return;
 
-  const email=sessionStorage.getItem(PENDING_OTP_EMAIL_KEY);
-  if(!email){
-    location.replace('registro.html');
-    return;
-  }
+  //   const email=sessionStorage.getItem(PENDING_OTP_EMAIL_KEY);
+  //   if(!email){
+  //     location.replace('registro.html');
+  //     return;
+  //   }
 
-  const emailInput=form.querySelector('#email');
-  const otpInput=form.querySelector('#otp');
-  emailInput.value=email;
-  otpInput.focus();
+  //   const emailInput=form.querySelector('#email');
+  //   const otpInput=form.querySelector('#otp');
+  //   emailInput.value=email;
+  //   otpInput.focus();
 
-  otpInput.addEventListener('input',()=>{
-    otpInput.value=otpInput.value.replace(/\D/g,'').slice(0,6);
-  });
+  //   otpInput.addEventListener('input',()=>{
+  //     otpInput.value=otpInput.value.replace(/\D/g,'').slice(0,6);
+  //   });
 
-  form.addEventListener('submit',async e=>{
-    e.preventDefault();
-    if(!form.reportValidity())return;
+  //   form.addEventListener('submit',async e=>{
+  //     e.preventDefault();
+  //     if(!form.reportValidity())return;
 
-    const btn=form.querySelector('button[type=submit]');
-    btn.disabled=true;
-    showAuthError('');
+  //     const btn=form.querySelector('button[type=submit]');
+  //     btn.disabled=true;
+  //     showAuthError('');
 
-    try{
-      await apiFetch('/api/auth/verify-otp',{
-        method:'POST',
-        body:JSON.stringify({email,otp:otpInput.value})
-      });
-      sessionStorage.removeItem(PENDING_OTP_EMAIL_KEY);
-      location.replace('index.html?verified=1');
-    }catch(err){
-      showAuthError(friendlyAuthError(err));
-      otpInput.select();
-    }finally{
-      btn.disabled=false;
-    }
-  });
-}
+  //     try{
+  //       await apiFetch('/api/auth/verify-otp',{
+  //         method:'POST',
+  //         body:JSON.stringify({email,otp:otpInput.value})
+  //       });
+  //       sessionStorage.removeItem(PENDING_OTP_EMAIL_KEY);
+  //       location.replace('index.html?verified=1');
+  //     }catch(err){
+  //       showAuthError(friendlyAuthError(err));
+  //       otpInput.select();
+  //     }finally{
+  //       btn.disabled=false;
+  //     }
+  //   });
+  // }
 
 document.addEventListener('DOMContentLoaded',()=>{
   if(document.body.dataset.auth==='guest'){
     redirectIfLogged();
     wireAuthForms();
-    wireOtpForm();
+    //wireOtpForm();
   }
 });
