@@ -1,6 +1,0 @@
-{
-  "name": "tucitas-crud",
-  "displayName": "TuCitas CRUD",
-  "description": "Gestiona citas mediante una API REST local: consultar, crear, editar y eliminar registros.",
-  "instantAppType": "html"
-}
